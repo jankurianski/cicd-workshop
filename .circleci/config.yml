@@ -1,13 +1,11 @@
 version: 2.1
-
-orbs: 
+orbs:
   node: circleci/node@5.0.2
   docker: circleci/docker@2.1.1
-
 jobs:
   build_and_test:
     docker:
-      - image: cimg/node:16.16.0
+      - image: 'cimg/node:16.16.0'
     steps:
       - checkout
       - node/install-packages
@@ -26,7 +24,7 @@ jobs:
           path: test-results
   build_docker_image:
     docker:
-      - image: cimg/base:stable
+      - image: 'cimg/base:stable'
     steps:
       - checkout
       - setup_remote_docker:
@@ -38,7 +36,6 @@ jobs:
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 0.1.<< pipeline.number >>
-
 workflows:
   test_scan_deploy:
     jobs:
